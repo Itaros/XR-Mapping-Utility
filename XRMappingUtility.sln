@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.31101.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XRMappingUtilityWin", "XRMappingUtilityWin\XRMappingUtilityWin.csproj", "{CA157D31-E1B5-4B0C-AD9C-6BD3AE165528}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CommonUI", "CommonUI\CommonUI.csproj", "{849F0CA3-490E-4002-8152-78F03167E4C5}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itaros.XRebirth", "Itaros.XRebirth\Itaros.XRebirth.csproj", "{2ED7E6D0-519C-4905-8066-6BB862D338D7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Itaros.Math", "Itaros.Math\Itaros.Math.csproj", "{DE0658D1-9349-4D7D-B404-44D08A90782B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CA157D31-E1B5-4B0C-AD9C-6BD3AE165528}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CA157D31-E1B5-4B0C-AD9C-6BD3AE165528}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CA157D31-E1B5-4B0C-AD9C-6BD3AE165528}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CA157D31-E1B5-4B0C-AD9C-6BD3AE165528}.Release|Any CPU.Build.0 = Release|Any CPU
+		{849F0CA3-490E-4002-8152-78F03167E4C5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{849F0CA3-490E-4002-8152-78F03167E4C5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{849F0CA3-490E-4002-8152-78F03167E4C5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{849F0CA3-490E-4002-8152-78F03167E4C5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2ED7E6D0-519C-4905-8066-6BB862D338D7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2ED7E6D0-519C-4905-8066-6BB862D338D7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2ED7E6D0-519C-4905-8066-6BB862D338D7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2ED7E6D0-519C-4905-8066-6BB862D338D7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DE0658D1-9349-4D7D-B404-44D08A90782B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DE0658D1-9349-4D7D-B404-44D08A90782B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{DE0658D1-9349-4D7D-B404-44D08A90782B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DE0658D1-9349-4D7D-B404-44D08A90782B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
