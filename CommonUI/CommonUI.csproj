@@ -52,11 +52,18 @@
       <SubType>Eto.Forms</SubType>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Widgets\CoordinateInput.cs">
+      <SubType>Eto.Forms</SubType>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Itaros.Math\Itaros.Math.csproj">
+      <Project>{de0658d1-9349-4d7d-b404-44d08a90782b}</Project>
+      <Name>Itaros.Math</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Itaros.XRebirth\Itaros.XRebirth.csproj">
       <Project>{2ed7e6d0-519c-4905-8066-6bb862d338d7}</Project>
       <Name>Itaros.XRebirth</Name>

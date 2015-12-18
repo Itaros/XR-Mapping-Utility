@@ -1,4 +1,6 @@
-﻿using Eto.Forms;
+﻿using CommonUI.Widgets;
+using Eto.Forms;
+using Itaros.Math;
 using Itaros.XRebirth;
 using Itaros.XRebirth.Content.DOMEntities;
 using Itaros.XRebirth.Content.Specialized;
@@ -25,8 +27,10 @@ namespace CommonUI
         {
             Host = host;
 
-            Resizable = false;
+            //Resizable = false;
             Maximizable = false;
+
+            Width = 350;
 
             BuildUI();
         }
@@ -35,6 +39,8 @@ namespace CommonUI
 
         private DropDown _dropStartZone;
         private DropDown _dropEndZone;
+
+        private GroupBox _groupStep3CfgBox;
 
         private void BuildUI()
         {
@@ -49,13 +55,56 @@ namespace CommonUI
             groupStep2.Content = new TableLayout(_dropStartZone, _dropEndZone);
 
             GroupBox groupStep3 = new GroupBox { Text = "Step 3: Set Gate Rules" };
-            groupStep3.Content = new Label { Text = "NYI" };
+            _groupStep3CfgBox = new GroupBox { Text = "Options" };
+            DropDown dropGateRules = new DropDown() { Items = { "Relative", "Arctangent" } };
+            dropGateRules.SelectedValueChanged += (sender, e) => {
+                BuildStep3UI(dropGateRules.SelectedValue.ToString());
+            };
+            groupStep3.Content = new TableLayout(new TableRow(dropGateRules), new TableRow(_groupStep3CfgBox) { ScaleHeight = true });
 
             Button buttonCommence = new Button { Text = "Commit!" };
             buttonCommence.Click += buttonCommence_Click;
 
-            Content = new TableLayout(new TableRow(groupStep1), new TableRow(groupStep2), new TableRow(groupStep3), new TableRow(buttonCommence) { ScaleHeight = false });
+            Content = new TableLayout(new TableRow(groupStep1), new TableRow(groupStep2), new TableRow(groupStep3) { ScaleHeight = true }, new TableRow(buttonCommence) { ScaleHeight = false });
         }
+
+        private void BuildStep3UI(string p)
+        {
+            switch (p)
+            {
+                default:
+                    throw new InvalidOperationException();
+                case "Relative":
+
+                    CoordinateInput ciEntryGate = new CoordinateInput { Text = "Entry Gate" };
+                    ciEntryGate.OnValueChanged += ciEntryGate_OnValueChanged;
+                    CoordinateInput ciExitGate = new CoordinateInput { Text = "Exit Gate" };
+                    ciExitGate.OnValueChanged += ciExitGate_OnValueChanged;
+
+
+                    _groupStep3CfgBox.Content = new TableLayout(new TableRow(ciEntryGate), new TableRow(ciExitGate), null);
+
+                    break;
+                case "Arctangent":
+
+                    _groupStep3CfgBox.Content = new TableLayout(new TableRow(new Label { Text = "Not yet implemented"}), null);
+
+                    break;
+            }
+        }
+
+        void ciExitGate_OnValueChanged(object sender, EventArgs e)
+        {
+            _exitZoneGatePosition = (sender as CoordinateInput).Value;
+        }
+
+        void ciEntryGate_OnValueChanged(object sender, EventArgs e)
+        {
+            _entryZoneGatePosition = (sender as CoordinateInput).Value;
+        }
+
+        private Vector3 _entryZoneGatePosition;
+        private Vector3 _exitZoneGatePosition;
 
         void buttonCommence_Click(object sender, EventArgs e)
         {
@@ -65,7 +114,9 @@ namespace CommonUI
                 HighwayNumber=3,
                 Sector = _currentSelectedSector,
                 StartZoneConnection = _dropStartZone.SelectedValue as ConnectionEnvelope,
-                EndZoneConnection = _dropEndZone.SelectedValue as ConnectionEnvelope
+                EndZoneConnection = _dropEndZone.SelectedValue as ConnectionEnvelope,
+                PositionStartZoneGate = _entryZoneGatePosition,
+                PositionExitZoneGate = _exitZoneGatePosition
             };
             action.Apply();
         }

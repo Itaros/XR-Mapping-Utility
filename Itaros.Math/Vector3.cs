@@ -42,5 +42,9 @@ namespace Itaros.Math
             return "x=\"" + X + "\" y=\"" + Y + "\" z=\"" + Z + "\"";
         }
 
+
+        public static Vector3 Zero {
+            get { return new Vector3(0, 0, 0); }
+        }
     }
 }

@@ -24,6 +24,9 @@ namespace Itaros.XRebirth.Manipulators
         public ConnectionEnvelope StartZoneConnection { get; set; }
         public ConnectionEnvelope EndZoneConnection { get; set; }
 
+        public Vector3 PositionStartZoneGate { get; set; }
+        public Vector3 PositionExitZoneGate { get; set; }
+
         public int HighwayNumber { get; set; }
         public string HighwayNumberString
         {
@@ -36,8 +39,6 @@ namespace Itaros.XRebirth.Manipulators
         public void Apply()
         {
             //0)Configuring Vectors
-            Vector3 positionStartZoneGate = new Vector3(0, 0, 0);
-            Vector3 positionEndZoneGate = new Vector3(0, 0, 0);
             Vector3 positionStartZone = StartZoneConnection.GetPositionVector();
             Vector3 positionEndZone = EndZoneConnection.GetPositionVector();
             Vector3 highwayReferencePoint = (positionEndZone - positionStartZone) / 2;//I have no idea...
@@ -51,14 +52,14 @@ namespace Itaros.XRebirth.Manipulators
             //    <position x="400" y="0" z="15000" />
             //  </offset>
             //</connection>
-            XmlNode gateconnection01 = GetGateConnectionNode("01", positionStartZoneGate);
+            XmlNode gateconnection01 = GetGateConnectionNode("01", PositionStartZoneGate);
             StartZone.AddToConnections(gateconnection01);
-            XmlNode gateconnection02 = GetGateConnectionNode("02", positionEndZoneGate);
+            XmlNode gateconnection02 = GetGateConnectionNode("02", PositionExitZoneGate);
             EndZone.AddToConnections(gateconnection02);
 
             //[position of the zone in the sector] + [position of the gate in the zone] - [position of the highway definition in the sector]
-            Vector3 positionEntrypointRelative = positionStartZone + positionStartZoneGate - highwayReferencePoint;
-            Vector3 positionExitpointRelative = positionEndZone + positionEndZoneGate - highwayReferencePoint;
+            Vector3 positionEntrypointRelative = positionStartZone + PositionStartZoneGate - highwayReferencePoint;
+            Vector3 positionExitpointRelative = positionEndZone + PositionExitZoneGate - highwayReferencePoint;
             //3)Creating zonehighways entry
               //<macro name="bftp_Highway01_macro" class="highway">
               //  <component ref="standardzonehighway" />
