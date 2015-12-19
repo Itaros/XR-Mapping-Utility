@@ -31,7 +31,14 @@ namespace Itaros.XRebirth.Content
             get { return _presentMapGroups; }
             set
             {
-                _presentMapGroups = value.ToArray();
+                if (value != null)
+                {
+                    _presentMapGroups = value.ToArray();
+                }
+                else
+                {
+                    _presentMapGroups = null;
+                }
             }
         }
 

@@ -32,7 +32,14 @@ namespace Itaros.XRebirth
                 if (extensionDirectory.Exists)
                 {
                     DirectoryInfo mapsDirectory = new DirectoryInfo(extensionDirectory.FullName + Path.DirectorySeparatorChar + "maps");
-                    DataContainers.PresentMapGroups = mapsDirectory.GetDirectories().Select(o => o.Name);
+                    if (mapsDirectory.Exists)
+                    {
+                        DataContainers.PresentMapGroups = mapsDirectory.GetDirectories().Select(o => o.Name);
+                    }
+                    else
+                    {
+                        DataContainers.PresentMapGroups = null;
+                    }
                 }
                 else
                 {
