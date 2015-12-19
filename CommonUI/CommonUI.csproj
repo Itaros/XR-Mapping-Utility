@@ -42,6 +42,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Dialogs\SelectExtensionDialog.cs">
+      <SubType>Eto.Forms</SubType>
+    </Compile>
     <Compile Include="FormManagerZoneHighways.cs">
       <SubType>Eto.Forms</SubType>
     </Compile>

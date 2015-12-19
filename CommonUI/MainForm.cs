@@ -1,4 +1,5 @@
-﻿using Eto.Forms;
+﻿using CommonUI.Dialogs;
+using Eto.Forms;
 using Itaros.XRebirth;
 using Itaros.XRebirth.Content;
 using System;
@@ -17,9 +18,10 @@ namespace CommonUI
             : base()
         {
             Project = new ProjectInfo(
-                new XRebirthInfo(@"D:\SteamLibrary\SteamApps\common\X Rebirth"),
-                new ExtensionInfo(@"ita_blastfromthepast_core")
+                null,
+                null
                 );
+
             Project.FillData();
 
             Title = "XRebirth Mapping Utility";
@@ -38,12 +40,46 @@ namespace CommonUI
         private void BuildUI()
         {
             TextBox labelBindedXRPath = new TextBox() { DataContext = Project, Enabled = false };
-            labelBindedXRPath.TextBinding.BindDataContext<ProjectInfo>(m=>m.XRebirth.PathToGame.ToString());
+            if (Project.XRebirth != null)
+            {
+                labelBindedXRPath.TextBinding.BindDataContext<ProjectInfo>(m => m.XRebirth.PathToGame.ToString());
+            }
             TextBox labelBindedExtensionName = new TextBox() { DataContext = Project, Enabled = false };
-            labelBindedExtensionName.TextBinding.BindDataContext<ProjectInfo>(m => m.Extension.ExtensionName.ToString());
+            if (Project.Extension != null)
+            {
+                labelBindedExtensionName.TextBinding.BindDataContext<ProjectInfo>(m => m.Extension.ExtensionName.ToString());
+            }
+
+            Button buttonSelectXRPath = new Button { Text = "Browse..." };
+            buttonSelectXRPath.Click += (sender, e) =>
+                {
+                    FileDialog selectXR = new OpenFileDialog { CheckFileExists = true };
+                    selectXR.Filters.Add(new FileDialogFilter("XRebirth.exe", "XRebirth.exe"));
+                    var result = selectXR.ShowDialog(this);
+                    if (result == DialogResult.Ok)
+                    {
+                        System.IO.FileInfo info = new System.IO.FileInfo(selectXR.FileName);
+                        Project.XRebirth = new XRebirthInfo(info.Directory.FullName);
+                        Project.FillData();
+                        BuildUI();//I am so cheap...
+                    }
+                };
+
+            Button buttonSelectExtension = new Button { Text = "Select..." };
+            buttonSelectExtension.Click += (sender, e) =>
+                {
+                    SelectExtensionDialog dialog = new SelectExtensionDialog { Extensions = Project.XRebirth.GetExtensionNames() };
+                    string selected = dialog.ShowModal(this);
+                    if (selected != null)
+                    {
+                        Project.Extension = new ExtensionInfo(selected);
+                        Project.FillData();
+                        BuildUI();//I am so cheap...
+                    }
+                };
 
             GroupBox groupProjectInfo = new GroupBox() { Text = "Project Info" };
-            groupProjectInfo.Content = new TableLayout(new TableRow(new Label() { Text = "Current Project:" }), new TableRow(labelBindedXRPath), new TableRow(labelBindedExtensionName));
+            groupProjectInfo.Content = new TableLayout(new TableRow(new Label() { Text = "Current Project:" }), new TableRow(new TableLayout(new TableRow(new TableCell(labelBindedXRPath) { ScaleWidth = true }, new TableCell(buttonSelectXRPath)))), new TableRow(new TableLayout(new TableRow(new TableCell(labelBindedExtensionName) { ScaleWidth = true }, new TableCell(buttonSelectExtension)))));
 
             DropDown boxSelectMap = new DropDown() { DataContext = Project, DataStore = Project.DataContainers.PresentMapGroups };
             boxSelectMap.SelectedValueChanged += boxSelectMap_SelectedValueChanged;

@@ -11,8 +11,8 @@ namespace Itaros.XRebirth
     public class ProjectInfo
     {
 
-        public XRebirthInfo XRebirth { get; private set; }
-        public ExtensionInfo Extension { get; private set; }
+        public XRebirthInfo XRebirth { get; set; }
+        public ExtensionInfo Extension { get; set; }
 
         public ProjectInfo(XRebirthInfo xr, ExtensionInfo ex)
         {
@@ -26,15 +26,18 @@ namespace Itaros.XRebirth
 
         public void FillData()
         {
-            DirectoryInfo extensionDirectory = new DirectoryInfo(XRebirth.PathToGame+Path.DirectorySeparatorChar+"extensions"+Path.DirectorySeparatorChar+Extension.ExtensionName);
-            if (extensionDirectory.Exists)
+            if (XRebirth != null && Extension != null)
             {
-                DirectoryInfo mapsDirectory = new DirectoryInfo(extensionDirectory.FullName+Path.DirectorySeparatorChar+"maps");
-                DataContainers.PresentMapGroups = mapsDirectory.GetDirectories().Select(o => o.Name);
-            }
-            else
-            {
-                throw new FileNotFoundException("Can't find extension dir", extensionDirectory.FullName);
+                DirectoryInfo extensionDirectory = new DirectoryInfo(XRebirth.PathToGame + Path.DirectorySeparatorChar + "extensions" + Path.DirectorySeparatorChar + Extension.ExtensionName);
+                if (extensionDirectory.Exists)
+                {
+                    DirectoryInfo mapsDirectory = new DirectoryInfo(extensionDirectory.FullName + Path.DirectorySeparatorChar + "maps");
+                    DataContainers.PresentMapGroups = mapsDirectory.GetDirectories().Select(o => o.Name);
+                }
+                else
+                {
+                    throw new FileNotFoundException("Can't find extension dir", extensionDirectory.FullName);
+                }
             }
         }
 
